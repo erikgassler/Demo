@@ -1,4 +1,6 @@
 .vs
+.config
 obj
 bin
 *.user
+*.pubxml
