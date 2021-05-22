@@ -109,10 +109,10 @@ namespace WebApp.Server.Database
 			return JsonConvert.Deserialize<T>(resultJSON);
 		}
 
-		private Task<IDictionary<string, object>[][]> ConnectAndRunCommand(CommandType commandType, string commandText, SqlParameter[] parameters)
+		private async Task<IDictionary<string, object>[][]> ConnectAndRunCommand(CommandType commandType, string commandText, SqlParameter[] parameters)
 		{
-			using SqlConnection dataConnection = GetService<SqlConnection>();
-			return TryProcess("ConnectAndRunCommand", async () =>
+			SqlConnection dataConnection = GetService<SqlConnection>();
+			try
 			{
 				dataConnection.Open();
 				using SqlCommand command = new(commandText, dataConnection)
@@ -132,10 +132,16 @@ namespace WebApp.Server.Database
 				}
 				while (reader.NextResult());
 				return results.ToArray();
-			}, _ =>
+			}
+			catch (Exception exception)
+			{
+				Log.TrackException(exception);
+				throw;
+			}
+			finally
 			{
 				dataConnection.Close();
-			});
+			}
 		}
 
 
@@ -157,22 +163,38 @@ namespace WebApp.Server.Database
 
 		private IDictionary<string, object>[] GetResultSet(SqlDataReader reader)
 		{
-			List<IDictionary<string, object>> resultSet = new List<IDictionary<string, object>>();
-			while (reader.Read())
+			try
 			{
-				resultSet.Add(GetRow(reader));
+				List<IDictionary<string, object>> resultSet = new List<IDictionary<string, object>>();
+				while (reader.Read())
+				{
+					resultSet.Add(GetRow(reader));
+				}
+				return resultSet.ToArray();
 			}
-			return resultSet.ToArray();
+			catch (Exception exception)
+			{
+				Log.TrackException(exception);
+				throw;
+			}
 		}
 
 		private IDictionary<string, object> GetRow(SqlDataReader reader)
 		{
-			IDictionary<string, object> row = new Dictionary<string, object>();
-			for (int index = 0; index < reader.FieldCount; ++index)
+			try
 			{
-				row.Add(reader.GetName(index), reader.GetValue(index));
+				IDictionary<string, object> row = new Dictionary<string, object>();
+				for (int index = 0; index < reader.FieldCount; ++index)
+				{
+					row.Add(reader.GetName(index), reader.GetValue(index));
+				}
+				return row;
 			}
-			return row;
+			catch(Exception exception)
+			{
+				Log.TrackException(exception);
+				throw;
+			}
 		}
 
 		private IJsonConvert JsonConvert { get; }

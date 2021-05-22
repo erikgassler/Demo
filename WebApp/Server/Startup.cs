@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Data.SqlClient;
 using WebApp.Server.Database;
+using WebApp.Shared;
 
 namespace WebApp.Server
 {
@@ -26,13 +27,14 @@ namespace WebApp.Server
 			services.AddRazorPages();
 			#region Abstract
 			services.AddSingleton<IJsonConvert, JsonConvert>();
+			services.AddScoped<IDevLog, DevLog>();
 			#endregion
 
 			#region Database
 			services.AddTransient<ISqlRunner, SqlRunner>();
 			services.AddTransient(context =>
 			{
-				SqlConnection DataConnection = new(Configuration.GetConnectionString("SqlDatabase"));
+				SqlConnection DataConnection = new(Configuration.GetValue<string>("Demo:ConnectionStrings:SqlDatabase"));
 				return DataConnection;
 			});
 			#endregion

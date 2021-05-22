@@ -1,5 +1,5 @@
 ﻿using Bunit;
-using Demo.Client.Shared;
+using WebApp.Client.Shared;
 using Xunit;
 
 namespace Demo.UnitTests.DemoClient.Shared

@@ -21,11 +21,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DemoServer\Abstract\" />
     <Folder Include="DemoServer\Controllers\" />
     <Folder Include="DemoServer\Database\" />
     <Folder Include="DemoServer\Pages\" />
     <Folder Include="DemoShared\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApp\Client\WebApp.Client.csproj" />
+    <ProjectReference Include="..\WebApp\Server\WebApp.Server.csproj" />
+    <ProjectReference Include="..\WebApp\Shared\WebApp.Shared.csproj" />
   </ItemGroup>
 
 </Project>
