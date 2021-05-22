@@ -69,7 +69,7 @@ function AddWebsiteToIIS {
 		$minorIP = 100 + $id
 
 		$fulldomain = $domain
-		Invoke-Expression ".\appcmd.exe add site /name:$name /id:$id /physicalPath:$MyRepoRootPath$name\wwwroot\ /bindings:http/127.0.$id.$($minorIP):80:$($fulldomain),https/127.0.$id.$($minorIP):443:$($fulldomain)"
+		Invoke-Expression ".\appcmd.exe add site /name:$name /id:$id /physicalPath:$MyRepoRootPath$name\ /bindings:http/127.0.$id.$($minorIP):80:$($fulldomain),https/127.0.$id.$($minorIP):443:$($fulldomain)"
 		Write-Host "$name was successfully setup" -ForegroundColor Green
 		"127.0.$id.$($minorIP) $fulldomain" | Add-Content -PassThru $hostsFile
 		SetupWebsiteSSL $name $fulldomain

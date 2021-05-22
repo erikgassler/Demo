@@ -14,11 +14,11 @@ Clear-Host
 
 # Update empty strings with values from your Azure AAD Application
 $keyvalues = ConvertFrom-Json '{
-"AzureAd:Domain": "Demo",
-"AzureAd:ClientId": "<ClientId>",
-"AzureAd:ClientSecret": "<ClientSecret>",
-"AzureAd:TenantId": "<TenantId>"
-"AzureAd:Authority": "https://login.microsoftonline.com/<TenantId>",
+"Demo:Domain": "Demo.ws",
+"Demo:ClientId": "<ClientId>",
+"Demo:ClientSecret": "<ClientSecret>",
+"Demo:TenantId": "<TenantId>",
+"Demo:ConnectionString:SqlDatabase"
 }'
 
 $keyvalues | Get-KeyValues | ForEach-Object {
