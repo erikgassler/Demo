@@ -3,11 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Server", "Demo\Server\Demo.Server.csproj", "{14B693B0-F64C-4B50-95D7-BCC34966C242}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Server", "Demo\Server\Demo.Server.csproj", "{14B693B0-F64C-4B50-95D7-BCC34966C242}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Client", "Demo\Client\Demo.Client.csproj", "{21E6B201-6BBC-48F7-8408-635517FED032}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Client", "Demo\Client\Demo.Client.csproj", "{21E6B201-6BBC-48F7-8408-635517FED032}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.Shared", "Demo\Shared\Demo.Shared.csproj", "{15A7951A-C248-4D95-B4A0-7A3BA1263108}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.Shared", "Demo\Shared\Demo.Shared.csproj", "{15A7951A-C248-4D95-B4A0-7A3BA1263108}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{AB123B0E-E750-49B5-9BFC-B93F86CC362D}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\Demo IIS Setup.ps1 = Docs\Demo IIS Setup.ps1
+		Docs\LICENSE.txt = Docs\LICENSE.txt
+		Docs\README.md = Docs\README.md
+		Docs\Update Env Variables.ps1 = Docs\Update Env Variables.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
