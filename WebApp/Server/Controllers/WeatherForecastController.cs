@@ -12,13 +12,6 @@ namespace WebApp.Server.Controllers
 	[Route("[controller]")]
 	public class WeatherForecastController : ControllerBase
 	{
-		private static readonly string[] Summaries = new[]
-		{
-			"Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-		};
-
-		private readonly ILogger<WeatherForecastController> _logger;
-
 		public WeatherForecastController(
 			ISqlRunner sqlRunner
 			)
@@ -29,15 +22,24 @@ namespace WebApp.Server.Controllers
 		[HttpGet]
 		public async Task<IEnumerable<WeatherForecast>> Get()
 		{
-			var rng = new Random();
-			WeatherForecastSummary[] summaries = await SqlRunner.RunSqlQuery<WeatherForecastSummary[]>("SELECT Id, Summary FROM [dbo].[WeatherForecastSummary] (NOLOCK)");
-			return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+			try
 			{
-				Date = DateTime.Now.AddDays(index),
-				TemperatureC = rng.Next(-20, 55),
-				Summary = summaries[rng.Next(summaries.Length)].Summary
-			})
-			.ToArray();
+				var rng = new Random();
+				WeatherForecastSummary[] summaries = await SqlRunner.RunSqlQuery<WeatherForecastSummary[]>("SELECT Id, Summary FROM [dbo].[WeatherForecastSummary] (NOLOCK)");
+				return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+				{
+					Date = DateTime.Now.AddDays(index),
+					TemperatureC = rng.Next(-20, 55),
+					Summary = summaries[rng.Next(summaries.Length)].Summary
+				})
+				.ToArray();
+			}
+			catch(Exception exception)
+			{
+				Response.Headers.Add(CustomHeaders.ErrorMessage.GetValue(), exception.Message);
+				Response.StatusCode = 500;
+				return default;
+			}
 		}
 
 		private ISqlRunner SqlRunner { get; }

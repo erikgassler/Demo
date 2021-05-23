@@ -22,11 +22,13 @@ namespace WebApp.Server
 		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		public void ConfigureServices(IServiceCollection services)
 		{
-
 			services.AddControllersWithViews();
 			services.AddRazorPages();
+
 			#region Abstract
+			services.AddTransient<IFileReader, FileReader>();
 			services.AddSingleton<IJsonConvert, JsonConvert>();
+			services.AddSingleton<IFileReader, FileReader>();
 			services.AddScoped<IDevLog, DevLog>();
 			#endregion
 
@@ -34,9 +36,19 @@ namespace WebApp.Server
 			services.AddTransient<ISqlRunner, SqlRunner>();
 			services.AddTransient(context =>
 			{
-				SqlConnection DataConnection = new(Configuration.GetValue<string>("Demo:ConnectionStrings:SqlDatabase"));
+				string connectionString = Configuration.GetConnectionString("Demo:SqlDatabase")
+					?? Configuration.GetConnectionString("SqlDatabase")
+					?? Configuration.GetValue<string>("ConnectionStrings:Demo:SqlDatabase")
+					?? Configuration.GetValue<string>("Demo:SqlDatabase")
+					?? Configuration.GetValue<string>("SqlDatabase")
+					;
+				SqlConnection DataConnection = new(connectionString);
 				return DataConnection;
 			});
+			#endregion
+
+			#region CryptoData
+			services.AddTransient<ICSVLoader, CSVLoader>();
 			#endregion
 		}
 
