@@ -3,8 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{AB123B0E-E750-49B5-9BFC-B93F86CC362D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{4769D823-7656-429C-B21E-3B77153B4E1F}"
 	ProjectSection(SolutionItems) = preProject
+		Docs\Crypto-Run-Ingestion.png = Docs\Crypto-Run-Ingestion.png
+		Docs\Crypto-Run-Report.png = Docs\Crypto-Run-Report.png
+		Docs\Crypto-Start.png = Docs\Crypto-Start.png
 		Docs\Demo IIS Setup.ps1 = Docs\Demo IIS Setup.ps1
 		Docs\LICENSE.txt = Docs\LICENSE.txt
 		Docs\README.md = Docs\README.md

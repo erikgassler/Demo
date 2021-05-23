@@ -11,6 +11,12 @@ Demo website used for showcasing concepts.
 Test-Driven Development|This solution is prioritized to be developed using test-driven development with a focus on unit testing. Other types of testing are planned to also be added soon.
 Ready-To-Run, No dev files|This solution excludes the use of any files that require custom configurations from a developer after pulling the project to their local. All config data is expected to be loaded from environment variables. App is expected to be runnable immediataly after a fresh clone without any further setup needed - though some features may be disabled if configuration is missing.
 
+## Crypto Report Demo
+
+![Crypto Report Page - First View](Crypto-Start.png)
+![Crypto Report Page - First View](Crypto-Start.png)
+![Crypto Report Page - First View](Crypto-Start.png)
+
 ## Local Setup
 
 |Step|Details|
