@@ -13,9 +13,12 @@ Ready-To-Run, No dev files|This solution excludes the use of any files that requ
 
 ## Crypto Report Demo
 
+### Navigate to Crypto page
 ![Crypto Report Page - First View](Crypto-Start.png)
-![Crypto Report Page - First View](Crypto-Start.png)
-![Crypto Report Page - First View](Crypto-Start.png)
+### Click Start Ingestion
+![Crypto Report Page - First View](Crypto-Run-Ingestion.png)
+### Click Load Latest Data - Repeat when finished to load next batch
+![Crypto Report Page - First View](Crypto-Run-Report.png)
 
 ## Local Setup
 
