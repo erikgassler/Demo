@@ -19,8 +19,10 @@ namespace WebApp.Server
 			if (IngestionIsRunning) { return Task.CompletedTask; }
 			lock (IngestionLock)
 			{
+				IngestionIsRunning = true;
 				Task.WaitAny(TruncateIngestionTableForIngestionDemoRestart());
 				Task.WaitAny(RunIngestion());
+				IngestionIsRunning = false;
 			}
 			return Task.CompletedTask;
 		}
