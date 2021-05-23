@@ -22,13 +22,13 @@ namespace WebApp.Server.Controllers
 			});
 		}
 
-		[HttpGet("LoadCryptoRecords")]
-		public Task<IEnumerable<CryptoData>> LoadCryptoRecords()
+		[HttpGet("LoadCryptoRecords/{lastId?}")]
+		public Task<IEnumerable<CryptoData>> LoadCryptoRecords(long lastId = 0)
 		{
 			return TryProcess(() =>
 			{
 				ICryptoStorage service = GetService<ICryptoStorage>();
-				return service.RunCryptoIngestionReport();
+				return service.RunCryptoIngestionReport(lastId);
 			});
 		}
 

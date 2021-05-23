@@ -1,0 +1,117 @@
+﻿@page "/crypto"
+@using WebApp.Shared
+@inject HttpClient Http
+
+<h1>Crypto Ingestion Demo</h1>
+
+<p>This component demonstrates simultaneously loading report data while an ingestion process is adding new records.</p>
+<p>The ingestion process takes about 30 minutes once started.</p>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th colspan="8">
+				<button class="@ButtonIngestionClass" @onclick="RunCryptoIngestion" disabled="@IngestionIsRunning">
+					Start Ingestion
+				</button>
+
+				<button class="@ButtonReportClass" @onclick="LoadLatestData" disabled="@LoadingNextRecordSet">
+					Load Latest Data
+				</button>
+
+			</th>
+			<th>
+				<p>Total Records: @CryptoReportLoaded.Count.ToString("N0")</p>
+				<p>Display Count: @CryptoReportLatest.Count.ToString("N0")</p>
+			</th>
+		</tr>
+		<tr>
+			<th>Unix</th>
+			<th>Date</th>
+			<th>Symbol</th>
+			<th>Open</th>
+			<th>High</th>
+			<th>Low</th>
+			<th>Close</th>
+			<th>Volume BTC</th>
+			<th>Volume USDT</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (CryptoData cryptoRecord in CryptoReportLatest)
+		{
+			<tr>
+				<td>@cryptoRecord.Unix</td>
+				<td>@cryptoRecord.Date.ToShortDateString()</td>
+				<td>@cryptoRecord.Symbol</td>
+				<td>@cryptoRecord.Open</td>
+				<td>@cryptoRecord.High</td>
+				<td>@cryptoRecord.Low</td>
+				<td>@cryptoRecord.Close</td>
+				<td>@cryptoRecord.VolumeBTC</td>
+				<td>@cryptoRecord.VolumeUSDT</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@code {
+	private static List<CryptoData> CryptoReportLatest { get; } = new();
+	private string ButtonIngestionClass => $"crypto-trigger btn {(IngestionIsRunning ? " disabled" : "btn-primary")}";
+	private string ButtonReportClass => $"crypto-report btn {(LoadingNextRecordSet ? " disabled" : "btn-primary")}";
+
+	protected override async Task OnInitializedAsync()
+	{
+		while (LoadingNextRecordSet)
+		{
+			StateHasChanged();
+			await Pause();
+		}
+	}
+
+	private async Task RunCryptoIngestion()
+	{
+		if (IngestionIsRunning) { return; }
+		IngestionIsRunning = true;
+		CryptoReportLatest.Clear();
+		CryptoReportLoaded.Clear();
+		LatestLoadedId = 0;
+		StateHasChanged();
+		await Http.GetFromJsonAsync<WeatherForecast[]>("TriggerCryptoIngestion");
+		IngestionIsRunning = false;
+	}
+
+	private async Task LoadLatestData()
+	{
+		if (LoadingNextRecordSet) { return; }
+		LoadingNextRecordSet = true;
+		IEnumerable<CryptoData> latest = await Http.GetFromJsonAsync<CryptoData[]>($"LoadCryptoRecords/{LatestLoadedId}");
+		await LoadLatest(latest);
+	}
+
+	private async Task LoadLatest(IEnumerable<CryptoData> latest)
+	{
+		foreach (CryptoData item in latest)
+		{
+			CryptoReportLoaded.Add(item);
+			if (item.Id > LatestLoadedId)
+			{
+				LatestLoadedId = item.Id;
+			}
+			CryptoReportLatest.Insert(0, item);
+			while (CryptoReportLatest.Count > 10)
+			{
+				CryptoReportLatest.RemoveAt(CryptoReportLatest.Count - 1);
+			}
+			StateHasChanged();
+			await Pause();
+		}
+		LoadingNextRecordSet = false;
+	}
+	private async Task Pause() => await Task.Delay(1);
+
+	private static List<CryptoData> CryptoReportLoaded { get; } = new();
+	private static bool IngestionIsRunning { get; set; } = false;
+	private static bool LoadingNextRecordSet { get; set; } = false;
+	private static long LatestLoadedId { get; set; } = 0;
+}

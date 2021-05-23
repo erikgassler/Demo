@@ -12,11 +12,11 @@ namespace Demo.UnitTests.DemoClient.Shared
 			using TestContext context = new();
 			IRenderedComponent<NavMenu> navMenu = context.RenderComponent<NavMenu>();
 
-			Assert.True(navMenu.Find(".NavMenu").ClassList.Contains("collapse"));
+			Assert.True(navMenu.Find(".NavMenuWrapper").ClassList.Contains("collapse"));
 
 			navMenu.Find(".navbar-toggler").Click();
 
-			Assert.False(navMenu.Find(".NavMenu").ClassList.Contains("collapse"));
+			Assert.False(navMenu.Find(".NavMenuWrapper").ClassList.Contains("collapse"));
 		}
 	}
 }

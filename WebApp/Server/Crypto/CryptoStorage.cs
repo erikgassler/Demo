@@ -12,7 +12,7 @@ namespace WebApp.Server
 		{
 		}
 
-		public async Task<IEnumerable<CryptoData>> RunCryptoIngestionReport()
+		public async Task<IEnumerable<CryptoData>> RunCryptoIngestionReport(long lastId)
 		{
 			List<CryptoData> dataList = await TryProcess("RunCryptoIngestionReport", async () =>
 			{
@@ -31,9 +31,10 @@ namespace WebApp.Server
 		, [VolumeUSDT]
 	FROM [dbo].[CryptoData] (NOLOCK)
 	WHERE [Id] > @lastid
+	ORDER BY [Id] ASC
 ",
 					new SqlParameter[] {
-						new SqlParameter("@lastid", Convert.ToInt32(0))
+						new SqlParameter("@lastid", lastId)
 					});
 			});
 			return dataList;
