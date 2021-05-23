@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using System;
 
 namespace Demo.UnitTests
@@ -15,6 +16,14 @@ namespace Demo.UnitTests
 		protected T IsAny<T>()
 		{
 			return It.IsAny<T>();
+		}
+
+		protected IServiceProvider ServiceProvider(Action<IServiceCollection> servicesConfigHandler = null)
+		{
+			IServiceCollection services = new ServiceCollection();
+
+			// Returning scoped service provider
+			return services.BuildServiceProvider().CreateScope().ServiceProvider;
 		}
 	}
 }

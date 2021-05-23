@@ -19,6 +19,7 @@ Environment Variables|Add environment variables to your local machine. See Power
 IIS Setup|Setup IIS server if desired to run on local domain instead of Visual Studio debugger. See PowerShell script `Docs/Demo IIS Setup.ps1`.
 IIS Mime Types|You may need to add some additional MIME types to your IIS app deployment. Add MIME types `.blat` and `.dat` with value `application/octet-stream`.
 Publish|Setup and run a publish profile in Visual Studio. Assure Target Location is directed to your desired deployment folder.
+SQL Database|Install SQL Server on your local machine and run scripts in SqlScripts folder using Sql Server Management Studio to setup your database.
 
 ## Author
 

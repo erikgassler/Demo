@@ -9,9 +9,17 @@ namespace WebApp.Shared
 		ErrorMessage
 	}
 
+	public enum SqlTables
+	{
+		[Value("[dbo].[WeatherForecastSummary]")]
+		WeatherForecastSummary,
+		[Value("[dbo].[CryptoData]")]
+		CryptoData
+	}
+
 	public static class Constants
 	{
-		public static string GetValue(this CustomHeaders instance)
+		public static string GetValue<T>(this T instance)
 		{
 			MemberInfo[] info = instance.GetType().GetMember(instance.ToString());
 			if (info == null || info.Length == 0) { return instance.ToString(); }

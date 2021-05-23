@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebApp.Shared;
 
 namespace WebApp.Server.Controllers
 {
@@ -8,14 +10,27 @@ namespace WebApp.Server.Controllers
 	{
 		public CryptoDataController(IServiceProvider serviceProvider) : base(serviceProvider)
 		{
-			CSVLoader = GetService<ICSVLoader>();
 		}
 
-		[HttpGet("TriggerCrypto")]
-		public async Task TriggerCryptoProcess()
+		[HttpGet("TriggerCryptoIngestion")]
+		public Task TriggerCryptoProcess()
 		{
+			return TryProcess(() =>
+			{
+				ICryptoIngestion service = GetService<ICryptoIngestion>();
+				return service.RunCryptoIngestion();
+			});
 		}
 
-		private ICSVLoader CSVLoader { get; }
+		[HttpGet("LoadCryptoRecords")]
+		public Task<IEnumerable<CryptoData>> LoadCryptoRecords()
+		{
+			return TryProcess(() =>
+			{
+				ICryptoStorage service = GetService<ICryptoStorage>();
+				return service.RunCryptoIngestionReport();
+			});
+		}
+
 	}
 }

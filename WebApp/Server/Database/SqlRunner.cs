@@ -69,7 +69,7 @@ namespace WebApp.Server.Database
 		{
 			return TryProcess($"RunSqlProcedure:{procedureName}", async () =>
 			{
-				LastResultSet = await ConnectAndRunCommand(CommandType.StoredProcedure, procedureName, parameters);
+				LastResultSet = await ConnectAndRunCommand(CommandType.StoredProcedure, procedureName, parameters).ConfigureAwait(false);
 				if (LastResultSet.Length == 0)
 				{
 					LastRunMessage = "No Results Found";
@@ -91,12 +91,15 @@ namespace WebApp.Server.Database
 		{
 			// Need to convert from IDictionary[] or IDictionary[][] to Type T - 1st step is to serialize into JSON string
 			string resultJSON;
-			if (typeof(Array[]).IsAssignableFrom(typeof(T)))
+			Type type = typeof(T);
+			if (typeof(Array[]).IsAssignableFrom(type))
 			{
 				if (resultSet.Length == 0 || resultSet[0].Length == 0) { return JsonConvert.Deserialize<T>("[]"); }
 				resultJSON = JsonConvert.Serialize(resultSet);
 			}
-			else if (typeof(Array).IsAssignableFrom(typeof(T)))
+			else if (typeof(Array).IsAssignableFrom(type)
+				|| type.FullName.Contains(".List")
+				)
 			{
 				if (resultSet.Length == 0 || resultSet[0].Length == 0) { return JsonConvert.Deserialize<T>("[]"); }
 				resultJSON = JsonConvert.Serialize(resultSet[0]);

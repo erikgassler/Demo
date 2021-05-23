@@ -24,7 +24,7 @@ namespace WebApp.Server.Controllers
 			{
 				ISqlRunner sqlRunner = GetService<ISqlRunner>();
 				var rng = new Random();
-				WeatherForecastSummary[] summaries = await sqlRunner.RunSqlQuery<WeatherForecastSummary[]>("SELECT Id, Summary FROM [dbo].[WeatherForecastSummary] (NOLOCK)");
+				WeatherForecastSummary[] summaries = await sqlRunner.RunSqlQuery<WeatherForecastSummary[]>($"SELECT Id, Summary FROM {SqlTables.WeatherForecastSummary.GetValue()} (NOLOCK)");
 				return Enumerable.Range(1, 5).Select(index => new WeatherForecast
 				{
 					Date = DateTime.Now.AddDays(index),

@@ -15,11 +15,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F5E48724
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.UnitTests", "Demo.UnitTests\Demo.UnitTests.csproj", "{D0C65CBF-3B60-4067-850F-672F0A2EC572}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.Server", "WebApp\Server\WebApp.Server.csproj", "{4C2AEB75-E4C6-47C1-BA6F-DC2EB069CCE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp.Server", "WebApp\Server\WebApp.Server.csproj", "{4C2AEB75-E4C6-47C1-BA6F-DC2EB069CCE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.Client", "WebApp\Client\WebApp.Client.csproj", "{B8303CE8-B486-428B-918B-12764076C6F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp.Client", "WebApp\Client\WebApp.Client.csproj", "{B8303CE8-B486-428B-918B-12764076C6F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.Shared", "WebApp\Shared\WebApp.Shared.csproj", "{8C6F1651-E777-41DB-A7DA-1BDD5C2F494D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp.Shared", "WebApp\Shared\WebApp.Shared.csproj", "{8C6F1651-E777-41DB-A7DA-1BDD5C2F494D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlScripts", "SqlScripts", "{8244A97B-B35A-4418-A0C4-5045CF9C37A3}"
+	ProjectSection(SolutionItems) = preProject
+		SqlScripts\Database.Demo.sql = SqlScripts\Database.Demo.sql
+		SqlScripts\Table.CryptoData.sql = SqlScripts\Table.CryptoData.sql
+		SqlScripts\Table.WeatherForecastSummary.sql = SqlScripts\Table.WeatherForecastSummary.sql
+		SqlScripts\UDT.CryptoDataInput.sql = SqlScripts\UDT.CryptoDataInput.sql
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -44,7 +44,7 @@ namespace WebApp.Server
 			return (T)Convert.ChangeType(input, typeof(T));
 		}
 
-		private const string StaticFile = "";
+		private const string StaticFile = "Uploads/Data.csv";
 		private const int UnixIndex = 0;
 		private const int DateIndex = 1;
 		private const int SymbolIndex = 2;

@@ -47,8 +47,10 @@ namespace WebApp.Server
 			});
 			#endregion
 
-			#region CryptoData
+			#region Crypto
 			services.AddTransient<ICSVLoader, CSVLoader>();
+			services.AddTransient<ICryptoIngestion, CryptoIngestion>();
+			services.AddTransient<ICryptoStorage, CryptoStorage>();
 			#endregion
 		}
 
