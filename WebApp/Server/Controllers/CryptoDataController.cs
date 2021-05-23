@@ -1,17 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace WebApp.Server.Controllers
 {
-	public class CryptoDataController : ControllerBase
+	public class CryptoDataController : ControllerCore
 	{
-		public CryptoDataController(ICSVLoader csvLoader)
+		public CryptoDataController(IServiceProvider serviceProvider) : base(serviceProvider)
 		{
-			CSVLoader = csvLoader;
+			CSVLoader = GetService<ICSVLoader>();
 		}
 
 		[HttpGet("TriggerCrypto")]
-		public async Task TriggerProcess()
+		public async Task TriggerCryptoProcess()
 		{
 		}
 
