@@ -47,7 +47,7 @@ namespace WebApp.Server
 			}
 		}
 
-		private SqlParameter MapCryptoDataToSqlParameter(CryptoData cryptoData)
+		private static SqlParameter MapCryptoDataToSqlParameter(CryptoData cryptoData)
 		{
 			DataTable table = new();
 			foreach (string column in new[] { "Id", "Unix", "Date", "Symbol", "Open", "High", "Low", "Close", "VolumeBTC", "VolumeUSDT" })

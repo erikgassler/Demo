@@ -1,14 +1,17 @@
-﻿using System;
-using System.Reflection;
-
-namespace WebApp.Shared
+﻿namespace WebApp.Shared
 {
+	/// <summary>
+	/// Custom response headers and their name defined in Value attributes.
+	/// </summary>
 	public enum CustomHeaders
 	{
 		[Value("X-Error-Message")]
 		ErrorMessage
 	}
 
+	/// <summary>
+	/// Sql tables used by solution with their `[schema].[tablename]` defined in Value attributes.
+	/// </summary>
 	public enum SqlTables
 	{
 		[Value("[dbo].[WeatherForecastSummary]")]
@@ -17,25 +20,10 @@ namespace WebApp.Shared
 		CryptoData
 	}
 
+	/// <summary>
+	/// Container for constant values that require being contained in a class.
+	/// </summary>
 	public static class Constants
 	{
-		public static string GetValue<T>(this T instance)
-		{
-			MemberInfo[] info = instance.GetType().GetMember(instance.ToString());
-			if (info == null || info.Length == 0) { return instance.ToString(); }
-			if (Attribute.GetCustomAttribute(info[0], typeof(ValueAttribute)) is not ValueAttribute valueTag) { return instance.ToString(); }
-			return valueTag.Value;
-		}
-	}
-
-	[AttributeUsage(AttributeTargets.Field)]
-	public class ValueAttribute : Attribute
-	{
-		public ValueAttribute(string value)
-		{
-			Value = value;
-		}
-
-		internal string Value { get; }
 	}
 }
