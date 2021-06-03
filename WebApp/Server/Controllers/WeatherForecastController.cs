@@ -20,7 +20,7 @@ namespace WebApp.Server.Controllers
 		[HttpGet]
 		public Task<IEnumerable<WeatherForecast>> GetWeatherForecast()
 		{
-			return TryProcess(async () =>
+			return TryLoggedProcess(async () =>
 			{
 				ISqlRunner sqlRunner = GetService<ISqlRunner>();
 				var rng = new Random();

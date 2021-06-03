@@ -14,7 +14,7 @@ namespace WebApp.Server
 
 		public async Task<IEnumerable<CryptoData>> RunCryptoIngestionReport(long lastId)
 		{
-			List<CryptoData> dataList = await TryProcess("RunCryptoIngestionReport", async () =>
+			List<CryptoData> dataList = await TryLoggedProcess("RunCryptoIngestionReport", async () =>
 			{
 				ISqlRunner sqlRunner = GetService<ISqlRunner>();
 				return await sqlRunner.RunSqlQuery<List<CryptoData>>($@"

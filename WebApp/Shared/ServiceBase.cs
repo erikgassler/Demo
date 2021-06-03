@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using static WebApp.Shared.Functional;
 
 namespace WebApp.Shared
 {
@@ -14,29 +15,24 @@ namespace WebApp.Shared
 			ServiceProvider = serviceProvider;
 		}
 
-		public T TryProcess<T>(
+		public T TryLoggedProcess<T>(
 			string processName,
 			Func<T> process,
 			Action<Stopwatch> finallyHandler = null
 			)
 		{
-			if(process == null) { return default; }
-			Stopwatch timer = Stopwatch.StartNew();
-			try
-			{
-				return process.Invoke();
-			}
-			catch(Exception exception)
-			{
-				Log.TrackException(exception);
-				return default;
-			}
-			finally
-			{
-				Log.TrackProperty($"EventTiming:{processName}", timer);
-				Log.TrackEvent($"{processName}:Finished");
-				finallyHandler?.Invoke(timer);
-			}
+			return TryProcess(process,
+				rethrowOnException: false,
+				exceptionHandler: (exception, timer) =>
+				{
+					Log.TrackException(exception);
+				},
+				finallyHandler: timer =>
+				{
+					Log.TrackProperty($"EventTiming:{processName}", timer);
+					Log.TrackEvent($"{processName}:Finished");
+					finallyHandler?.Invoke(timer);
+				});
 		}
 
 		protected IDevLog Log => GetService<IDevLog>();

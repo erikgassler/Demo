@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using WebApp.Shared;
+using static WebApp.Shared.Functional;
 
 namespace WebApp.Server.Controllers
 {
@@ -13,7 +14,7 @@ namespace WebApp.Server.Controllers
 			ServiceProvider = serviceProvider;
 		}
 
-		public T TryProcess<T>(
+		public T TryLoggedProcess<T>(
 			Func<T> process,
 			Action<Stopwatch> finallyHandler = null,
 			[CallerFilePath] string filePath = null,
@@ -21,28 +22,23 @@ namespace WebApp.Server.Controllers
 			[CallerLineNumber] int lineNumber = 0
 			)
 		{
-			if (process == null) { return default; }
-			Stopwatch timer = Stopwatch.StartNew();
-			try
-			{
-				return process.Invoke();
-			}
-			catch (Exception exception)
-			{
-				Log.TrackProperty("Exception:FilePath", filePath);
-				Log.TrackProperty("Exception:Method", method);
-				Log.TrackProperty("Exception:LineNumber", lineNumber);
-				Log.TrackException(exception);
-				Response.Headers.Add(CustomHeaders.ErrorMessage.GetValue(), exception.Message);
-				Response.StatusCode = 500;
-				return default;
-			}
-			finally
-			{
-				Log.TrackProperty($"ControllerTiming:{method}", timer);
-				Log.TrackEvent($"Controller:{method}:Finished");
-				finallyHandler?.Invoke(timer);
-			}
+			return TryProcess(process,
+				rethrowOnException: false,
+				exceptionHandler: (exception, timer) =>
+				{
+					Log.TrackProperty("Exception:FilePath", filePath);
+					Log.TrackProperty("Exception:Method", method);
+					Log.TrackProperty("Exception:LineNumber", lineNumber);
+					Log.TrackException(exception);
+					Response.Headers.Add(CustomHeaders.ErrorMessage.GetValue(), exception.Message);
+					Response.StatusCode = 500;
+				},
+				finallyHandler: timer =>
+				{
+					Log.TrackProperty($"ControllerTiming:{method}", timer);
+					Log.TrackEvent($"Controller:{method}:Finished");
+					finallyHandler?.Invoke(timer);
+				});
 		}
 
 		protected IDevLog Log => GetService<IDevLog>();

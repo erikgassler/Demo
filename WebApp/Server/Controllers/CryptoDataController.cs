@@ -15,7 +15,7 @@ namespace WebApp.Server.Controllers
 		[HttpGet("TriggerCryptoIngestion")]
 		public Task TriggerCryptoProcess()
 		{
-			return TryProcess(() =>
+			return TryLoggedProcess(() =>
 			{
 				ICryptoIngestion service = GetService<ICryptoIngestion>();
 				return service.RunCryptoIngestion();
@@ -25,7 +25,7 @@ namespace WebApp.Server.Controllers
 		[HttpGet("LoadCryptoRecords/{lastId?}")]
 		public Task<IEnumerable<CryptoData>> LoadCryptoRecords(long lastId = 0)
 		{
-			return TryProcess(() =>
+			return TryLoggedProcess(() =>
 			{
 				ICryptoStorage service = GetService<ICryptoStorage>();
 				return service.RunCryptoIngestionReport(lastId);

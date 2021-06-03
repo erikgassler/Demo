@@ -37,7 +37,6 @@
     <Folder Include="DemoServer\Controllers\" />
     <Folder Include="DemoServer\Database\" />
     <Folder Include="DemoServer\Pages\" />
-    <Folder Include="DemoShared\" />
   </ItemGroup>
 
   <ItemGroup>

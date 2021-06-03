@@ -16,7 +16,7 @@ namespace WebApp.Server.Database
 
 		public Task<T> RunSqlQuery<T>(string rawSQL, SqlParameter[] parameters = null)
 		{
-			return TryProcess("RunSqlQuery", async () =>
+			return TryLoggedProcess("RunSqlQuery", async () =>
 			{
 				IDictionary<string, object>[][] rawResults = await RunSqlQuery(rawSQL, parameters).ConfigureAwait(false);
 				return ConvertResultSet<T>(rawResults);
@@ -25,7 +25,7 @@ namespace WebApp.Server.Database
 
 		public Task<IDictionary<string, object>[][]> RunSqlQuery(string rawSql, SqlParameter[] parameters = null)
 		{
-			return TryProcess("RunSqlQuery", async () =>
+			return TryLoggedProcess("RunSqlQuery", async () =>
 			{
 				string[] batches = rawSql.Split(new[] { "\nGO\n" }, StringSplitOptions.RemoveEmptyEntries);
 				foreach (string batch in batches)
@@ -52,7 +52,7 @@ namespace WebApp.Server.Database
 		/// <returns></returns>
 		public Task<T> RunSqlProcedure<T>(string procedureName, SqlParameter[] parameters = null)
 		{
-			return TryProcess($"RunSqlProcedure:{procedureName}", async () =>
+			return TryLoggedProcess($"RunSqlProcedure:{procedureName}", async () =>
 			{
 				IDictionary<string, object>[][] rawResults = await RunSqlProcedure(procedureName, parameters);
 				return ConvertResultSet<T>(rawResults);
@@ -67,7 +67,7 @@ namespace WebApp.Server.Database
 		/// <returns></returns>
 		public Task<IDictionary<string, object>[][]> RunSqlProcedure(string procedureName, SqlParameter[] parameters = null)
 		{
-			return TryProcess($"RunSqlProcedure:{procedureName}", async () =>
+			return TryLoggedProcess($"RunSqlProcedure:{procedureName}", async () =>
 			{
 				LastResultSet = await ConnectAndRunCommand(CommandType.StoredProcedure, procedureName, parameters).ConfigureAwait(false);
 				if (LastResultSet.Length == 0)
