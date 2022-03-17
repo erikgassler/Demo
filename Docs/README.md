@@ -7,7 +7,7 @@ Demo website used for showcasing concepts.
 |Concept|Details|
 |--|--|
 [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)|This website uses Microsoft's Blazor framework to allow UI work to be engineered using C# and .NET language and libraries. This code is then compiled into WebAssembly that will be run by the browser when loading the site.
-.NET 5.0|This solution utilizes .NET 5.0 runtimes for all of its projects.
+.NET 6.0|This solution utilizes .NET 6.0 runtimes for all of its projects.
 Test-Driven Development|This solution is prioritized to be developed using test-driven development with a focus on unit testing. Other types of testing are planned to also be added soon.
 Ready-To-Run, No dev files|This solution excludes the use of any files that require custom configurations from a developer after pulling the project to their local. All config data is expected to be loaded from environment variables. App is expected to be runnable immediataly after a fresh clone without any further setup needed - though some features may be disabled if configuration is missing.
 
