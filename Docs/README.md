@@ -8,17 +8,22 @@ Demo website used for showcasing concepts.
 |--|--|
 [Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)|This website uses Microsoft's Blazor framework to allow UI work to be engineered using C# and .NET language and libraries. This code is then compiled into WebAssembly that will be run by the browser when loading the site.
 .NET 6.0|This solution utilizes .NET 6.0 runtimes for all of its projects.
-Test-Driven Development|This solution is prioritized to be developed using test-driven development with a focus on unit testing. Other types of testing are planned to also be added soon.
+Test-Driven Development|This solution is prioritized to be developed using test-driven development with a focus on unit testing.
 Ready-To-Run, No dev files|This solution excludes the use of any files that require custom configurations from a developer after pulling the project to their local. All config data is expected to be loaded from environment variables. App is expected to be runnable immediataly after a fresh clone without any further setup needed - though some features may be disabled if configuration is missing.
 
 ## Crypto Report Demo
 
 ### Navigate to Crypto page
-![Crypto Report Page - First View](Crypto-Start.png)
+
+![Crypto Report Page - First View](https://raw.github.com/erikgassler/Demo/master/Docs/Crypto-Start.png)
+
 ### Click Start Ingestion
-![Crypto Report Page - First View](Crypto-Run-Ingestion.png)
+
+![Crypto Report Page - First View](https://raw.github.com/erikgassler/Demo/master/Docs/Crypto-Run-Ingestion.png)
+
 ### Click Load Latest Data - Repeat when finished to load next batch
-![Crypto Report Page - First View](Crypto-Run-Report.png)
+
+![Crypto Report Page - First View](https://raw.github.com/erikgassler/Demo/master/Docs/Crypto-Run-Report.png)
 
 ## Local Setup
 
